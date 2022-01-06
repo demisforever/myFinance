@@ -9,6 +9,8 @@ router.get('/', (req, res) => {
 
 router.post('/add', (req, res) => {
     expenseController.create(req, res);
+    // refresca la pagina luego de crear
+    res.redirect(req.get('referer'));
 });
 
 module.exports = router;
