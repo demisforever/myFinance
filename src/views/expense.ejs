@@ -1,0 +1,85 @@
+<%- include('partials/_header'); -%>
+
+    <div class="container">
+        <nav class="navbar navbar-dark bg-dark"> <h1>Expenses</h1></nav>
+        <div class="row md-5">
+
+            <div class="col-md-7">
+                <table class="table table-border table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">id</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Type</th>
+                            <th scope="col">Description</th>
+                            <th scope="col">Amount</th>
+                            <th scope="col">Currency</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% dataExpense[0].forEach(function(d) { %>
+                            <tr>
+                                <td>
+                                    <%= d.idExpense %>
+                                </td>
+                                <td>
+                                    <%=
+                                    d.date.getDate().toString().padStart(2, '0') +"/"+
+                                    d.date.getMonth().toString().padStart(2, '0') +"/"+
+                                    d.date.getFullYear().toString().padStart(4, '0') +" "+
+                                    d.date.getHours().toString().padStart(2, '0') +":"+
+                                    d.date.getMinutes().toString().padStart(2, '0')
+                                    %>
+                                </td>
+                                <td>(<%= d.idExpenseType %>) <%= d.typeDescription %>
+                                </td>
+                                <td>
+                                    <%= d.expenseDescription %>
+                                </td>
+                                <td>
+                                    <%= d.amount %>
+                                </td>
+                                <td>
+                                    <%= d.currency %>
+                                </td>
+                            </tr>
+                        <% }); %>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="col-md-5">
+                <div class="card">
+                    <div class="card-body">
+                        <form action="/add" method="post">
+                            <div class="form-group">
+                                <input type="datetime-local" name="date" placeholder="datetime" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" name="description" placeholder="description" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <input type="number" name="amount" placeholder="amount" class="form-control">
+                            </div>
+                                <select class="custom-select form-group" id="currency" name="currency">
+                                    <option value="ARS" selected>ARS</option>
+                                    <option value="USD">USD</option>
+                                    <option value="EUR">EUR</option>
+                                </select>
+                            <div class="form-group">
+                                <select class="expenseType" id="expenseType" name="expenseType">
+                                    <% dataExpense[1].forEach(function(et) { %>
+                                        <option value= <%= et.idExpenseType  %> > <%= et.description  %> </option>
+                                    <% }); %>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn primary">Save Expense</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <%- include('partials/_footer'); -%>
